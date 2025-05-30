@@ -29,7 +29,7 @@ jobs:
       - name: Running the test
         run: |
             echo "Running Test . . . . "
-            npm run test; if (!$?) { echo "Tests failed" }
+            npm run check > test-result.txt
       
       # Uploading result to artifact      
       - name: Upload Test Results
@@ -85,7 +85,6 @@ jobs:
       # Deployment Process and as per readme.md in the assignment
       - name: Deployment Process
         run: |
-          pm2 delete node-app || true
           pm2 start ./src/server.js --name node-app
           pm2 save
 
