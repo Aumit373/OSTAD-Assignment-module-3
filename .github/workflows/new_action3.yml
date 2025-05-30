@@ -87,9 +87,8 @@ jobs:
         run: |
           pm2 start ./src/server.js --name node-app
           pm2 save
-          pm2 log
-
-
+          
       #END
       # Must run git bash with admin priviledge
-      # Attempt Number: 11th + trying: deploy start then stat application keeps running
+      # Attempt Number: 15th will keep running for testing
+
