@@ -1,0 +1,75 @@
+name: Testing, Building and Deploying
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: first_runner1
+
+    steps:
+      # Mandatory code checkout from git to the runner machine
+      - name: Code Checkout Must
+        uses: actions/checkout@v4
+
+      # Installing the Node with version 22 as mentioned
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Installing all the dependency as per developers requirements
+      - name: Install Dependency
+        run: npm install
+
+      # Perform application testing*** (Testing and capturing artifact)
+      - name: Running the test
+        run: |
+            echo "Running Test . . . . "
+            npm run check >test-result.txt || true
+            cat test-result.txt
+
+      # Uploading result to artifact      
+      - name: Upload the test-result
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-result
+          path: test-result.txt         
+
+
+  deploy:
+    runs-on: first_runner1
+    
+    steps:
+      # Mandatory code checkout from git to the runner machine
+      - name: Code Checkout Must
+        uses: actions/checkout@v4
+
+      # Installing the Node with version 22 as mentioned
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Installing all the dependency as per developers requirements
+      - name: Install Dependency
+        run: npm install
+
+      # Downloading Artifact
+      - name: Download the test-result
+        uses: actions/download-artifact@v4
+        with:
+          name: test-result
+          
+      # Displaying the artifact contents
+      - name: Display Artifacts
+        run: npm start
+    
+
+
+      # Running the application on the self hosted runner
+      - name: Run the application
+        run: npm start
