@@ -82,8 +82,8 @@ jobs:
       #     pm2 start ./src/server.js --name node-app
       #     pm2 save
 
-      # Deployment Process and as per readme.md in the assignment
-      - name: Deployment Process
+      # Deployment Process and as per readme.md in the assignment and run program
+      - name: Deployment Process and Application Start
         run: |
           pm2 start ./src/server.js --name node-app
           pm2 save
