@@ -29,7 +29,7 @@ jobs:
       - name: Running the test
         run: |
             echo "Running Test . . . . "
-            npm run check >test-result.txt || true
+            npm run test; if (!$?) { echo "Tests failed" }
       
       # Uploading result to artifact      
       - name: Upload Test Results
@@ -82,13 +82,13 @@ jobs:
       #     pm2 start ./src/server.js --name node-app
       #     pm2 save
 
-      # Deployment Process as per readme.md in the assignment
+      # Deployment Process and as per readme.md in the assignment
       - name: Deployment Process
         run: |
           pm2 delete node-app || true
           pm2 start ./src/server.js --name node-app
           pm2 save
-          
+
 
       #END
       # Must run git bash with admin priviledge
