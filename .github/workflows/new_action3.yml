@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: first_runner1
+    runs-on: runner-2
 
     steps:
       # Mandatory code checkout from git to the runner machine
@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     needs: test
-    runs-on: first_runner1
+    runs-on: runner-2
     
     steps:
       # Mandatory code checkout from git to the runner machine
