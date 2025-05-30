@@ -30,7 +30,7 @@ jobs:
         run: |
             echo "Running Test . . . . "
             npm run check >test-result.txt || true
-            cat test-result.txt
+            
 
       # Uploading result to artifact      
       - name: Upload the test-result
@@ -65,11 +65,20 @@ jobs:
           name: test-result
           
       # Displaying the artifact contents
-      - name: Display Artifacts
-        run: npm start
+      - name: Show the test result
+        run: |
+          echo "Display Artifact Contents"
+          cat test-result.txt
     
-
-
       # Running the application on the self hosted runner
       - name: Run the application
         run: npm start
+
+      # Deployment Process as per readme.md in the assignment
+      - name: Deployment code run
+        run: |
+          pm2 delete node-app || true
+          pm2 start "./src/server.js" --name node-app
+          pm2 save
+
+          
