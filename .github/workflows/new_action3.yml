@@ -29,7 +29,7 @@ jobs:
       - name: Running the test
         run: |
             echo "Running Test . . . . "
-            npm run check >test-result.txt || true
+            npm run check >test-result.txt | true
       
       # Uploading result to artifact      
       - name: Upload Test Results
@@ -40,6 +40,7 @@ jobs:
 
 
   deploy:
+    needs: test
     runs-on: first_runner1
     
     steps:
@@ -81,11 +82,10 @@ jobs:
       # Deployment Process as per readme.md in the assignment
       - name: Deployment Process
         run: |
-          pm2 delete node-app || true
+          pm2 delete node-app | true
           pm2 start ./src/server.js --name node-app
           pm2 save
 
       #END
       # Must run git bash with admin priviledge
-      # Attempt Number: 7th + back to gitbash with dev mode and admin access
-      
+      # Attempt Number: 8th + || + back to gitbash with dev mode and admin access
