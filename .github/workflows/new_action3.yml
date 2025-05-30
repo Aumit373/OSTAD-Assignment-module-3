@@ -30,14 +30,13 @@ jobs:
         run: |
             echo "Running Test . . . . "
             npm run check >test-result.txt || true
-            
-
+      
       # Uploading result to artifact      
-      - name: Upload the test-result
+      - name: Upload Test Results
         uses: actions/upload-artifact@v4
         with:
           name: test-result
-          path: test-result.txt         
+          path: test-result.txt        
 
 
   deploy:
@@ -70,17 +69,23 @@ jobs:
           echo "Display Artifact Contents"
           cat test-result.txt
     
+      # making sure deployment works    
+      - name: Install PM2
+        run: npm install -g pm2
+
       # Running the application on the self hosted runner
       - name: Run the application
-        run: npm start
+        run: |
+          npm start
 
       # Deployment Process as per readme.md in the assignment
-      - name: Deployment code run
+      - name: Deployment Process
         run: |
           pm2 delete node-app || true
-          pm2 start "./src/server.js" --name node-app
+          pm2 start ./src/server.js --name node-app
           pm2 save
 
       #END
       # Must run git bash with admin priviledge
-      # Attempt Number: 5th
+      # Attempt Number: 7th + back to gitbash with dev mode and admin access
+      
